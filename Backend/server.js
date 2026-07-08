@@ -3,7 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import mongoose from "mongoose";
 import dns from "dns";
-/* import chatRoutes from "./routes/chat.js"; */
+import chatRoutes from "./routes/chat.js"; 
 
 
 const app = express();
