@@ -15,7 +15,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 app.use(express.json());
 app.use(cors());
 
-/* app.use("/api", chatRoutes); */
+app.use("/api", chatRoutes);
 
 app.listen(PORT, () => {
     console.log(`server running on ${PORT}`);
