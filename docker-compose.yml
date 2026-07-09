@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./Backend/.env
+    environment:
+      - PORT=8080
+      - MONGODB_URI=mongodb://mongo:27017/openchat
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./Frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6.0
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
