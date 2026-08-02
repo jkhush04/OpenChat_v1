@@ -5,23 +5,11 @@ import {v1 as uuidv1} from "uuid";
 import gptLogo from "./assets/gptlogo.svg";
 
 function Sidebar() {
-    const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
-
-    const getAllThreads = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/api/thread");
-            const res = await response.json();
-            const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
-            //console.log(filteredData);
-            setAllThreads(filteredData);
-        } catch(err) {
-            console.log(err);
-        }
-    };
+    const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats, refreshThreads} = useContext(MyContext);
 
     useEffect(() => {
-        getAllThreads();
-    }, [currThreadId])
+        refreshThreads();
+    }, [currThreadId]);
 
 
     const createNewChat = () => {

@@ -5,15 +5,17 @@ import { useContext, useState, useEffect } from "react";
 import {ScaleLoader} from "react-spinners";
 
 function ChatWindow() {
-    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
+    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat, refreshThreads} = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [error, setError] = useState(null);
 
     const getReply = async () => {
+        if (!prompt.trim()) return;
+
         setLoading(true);
         setNewChat(false);
 
-        console.log("message ", prompt, " threadId ", currThreadId);
         const options = {
             method: "POST",
             headers: {
@@ -27,14 +29,28 @@ function ChatWindow() {
 
         try {
             const response = await fetch("http://localhost:8080/api/chat", options);
-            const res = await response.json();
-            console.log(res);
-            setReply(res.reply);
+            const data = await response.json();
+
+            if (!response.ok || !data.reply) {
+                throw new Error(data.error || "Unable to fetch assistant response.");
+            }
+
+            setReply(data.reply);
+            setError(null);
+            refreshThreads();
         } catch(err) {
             console.log(err);
+            setError(err.message || "Network error");
         }
         setLoading(false);
     }
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => setError(null), 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
 
     //Append new chat to prevChats
     useEffect(() => {
@@ -90,6 +106,7 @@ function ChatWindow() {
                     </input>
                     <div id="submit" onClick={getReply}><i className="fa-solid fa-paper-plane"></i></div>
                 </div>
+                {error && <div className="errorMessage">{error}</div>}
                 <p className="info">
                     SigmaGPT can make mistakes. Check important info. See Cookie Preferences.
                 </p>
