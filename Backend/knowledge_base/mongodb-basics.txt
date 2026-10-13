@@ -1,0 +1,10 @@
+MongoDB basics
+
+MongoDB is a document database that stores records as JSON-like documents. It is a good choice for chat applications because each conversation thread can be stored as a single document containing an array of message objects.
+
+Key MongoDB features:
+- Flexible schema: documents can contain nested structures
+- Collections: groups of documents similar to tables in SQL
+- Indexing: improves query performance
+
+In this project, MongoDB stores thread metadata and message history. The backend uses Mongoose to define schemas, validate data, and perform CRUD operations.

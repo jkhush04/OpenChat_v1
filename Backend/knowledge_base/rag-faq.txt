@@ -1,0 +1,13 @@
+RAG FAQ
+
+Q: What is Retrieval-Augmented Generation (RAG)?
+A: RAG is a technique that combines a retrieval system with a generative language model. It retrieves relevant pieces of text from a knowledge store and includes them as context when generating an answer.
+
+Q: Why use RAG?
+A: RAG helps reduce hallucinations and keeps the AI grounded in trusted source material. It also allows the system to answer questions about documents or data that are not part of the model's training data.
+
+Q: What is a vector store?
+A: A vector store saves embeddings, which are numeric representations of text. The store can then find semantically similar text by comparing vector distances.
+
+Use case in this demo:
+This project will load local documents, embed them, store them in a vector index, and retrieve the best matching chunks for each user question.

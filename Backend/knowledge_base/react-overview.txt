@@ -1,0 +1,11 @@
+React overview
+
+React is a JavaScript library for building user interfaces with reusable components. It uses a virtual DOM to efficiently update the page when state changes. React apps are usually organized into functional components, which receive props and manage local state.
+
+Important React concepts:
+- Components: reusable UI units
+- State: reactive data owned by a component
+- Props: configuration passed from parent to child
+- Hooks: functions like useState and useEffect that add features to functional components
+
+In this project, React is used to render the chat interface, manage conversation state, and handle user input and thread navigation.

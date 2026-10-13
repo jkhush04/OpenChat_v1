@@ -1,5 +1,15 @@
 {
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "ingest": "node scripts/ingest.js"
+  },
   "dependencies": {
+    "@langchain/core": "^1.1.0",
+    "@langchain/google-genai": "^2.2.0",
+    "@langchain/pinecone": "^1.0.3",
+    "@langchain/textsplitters": "^1.0.1",
+    "@pinecone-database/pinecone": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
@@ -9,3 +19,4 @@
   },
   "type": "module"
 }
+

@@ -17,10 +17,19 @@ import "dotenv/config";
     }; */
 
 
-    const getOpenAIAPIResponse = async (message) => {
+    // `context` is optional retrieved text from the RAG pipeline (see utils/rag.js).
+    // When it's present we wrap the user's message with instructions + the
+    // retrieved passages so the model prefers grounded facts over guessing.
+    // When it's null (RAG not configured, or nothing relevant found), the
+    // function behaves exactly as before — plain message in, plain reply out.
+    const getOpenAIAPIResponse = async (message, context = null) => {
     // 1. Change the URL to Google's OpenAI-compatible endpoint
     //const url = "https://googleapis.com";
-    
+
+    const promptContent = context
+        ? `You are a helpful assistant. Use the following context from the knowledge base to answer the user's question. If the context doesn't contain the answer, say so and answer from your own knowledge instead.\n\nContext:\n${context}\n\nQuestion: ${message}`
+        : message;
+
     const options = {
         method: "POST",
         headers: {
@@ -33,7 +42,7 @@ import "dotenv/config";
             model: "gemini-2.5-flash",
             messages: [{
                 role: "user",
-                content: message
+                content: promptContent
             }]
         })
     };

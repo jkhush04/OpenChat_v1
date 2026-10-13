@@ -1,0 +1,14 @@
+Project architecture for RAG demo
+
+This application has two main layers:
+1. Chat persistence: store user and assistant messages in MongoDB as conversation threads.
+2. RAG retrieval: index external documents in a vector store and use them to enrich AI prompts.
+
+Data flow:
+- The frontend sends a user query to the backend.
+- The backend embeds the query and searches the vector store for relevant content.
+- The retrieved content is combined with the query and sent to the AI model.
+- The model returns a grounded answer.
+- The answer and user query are saved in MongoDB for thread history.
+
+This architecture shows both conversational app design and modern retrieval-augmented generation, which is useful for interviews and real-world applications.
