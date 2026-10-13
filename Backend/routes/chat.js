@@ -1,6 +1,7 @@
 import express from "express";
 import Thread from "../models/Thread.js";
 import getOpenAIAPIResponse from "../utils/openai.js";
+import retrieveContext from "../utils/rag.js";
 
 const router = express.Router();
 
@@ -88,7 +89,13 @@ router.post("/chat", async(req, res) => {
             thread.messages.push({role: "user", content: message});
         }
 
-        const assistantReply = await getOpenAIAPIResponse(message);
+        // RAG step: look up relevant chunks from the Pinecone knowledge base
+        // for this specific message. Returns null if RAG isn't configured or
+        // nothing relevant was found — in that case the model just answers
+        // normally, exactly like before this feature was added.
+        const context = await retrieveContext(message);
+
+        const assistantReply = await getOpenAIAPIResponse(message, context);
 
         if (!assistantReply) {
             throw new Error("AI service did not return a reply.");

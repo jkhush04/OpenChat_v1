@@ -1,0 +1,11 @@
+OpenAI and generative models
+
+OpenAI provides powerful models that can understand and generate text, code, and other content. These models work by predicting the next word in a sequence based on the input prompt. For a RAG application, the LLM is used together with external knowledge to provide more accurate and context-rich responses.
+
+Key concepts:
+- Prompt: the user query and any additional context
+- Completion: the model's generated answer
+- Few-shot examples: sample input-output pairs that teach the model how to respond
+
+Use case for RAG:
+Instead of asking the model to answer purely from its internal knowledge, you can retrieve relevant facts from a knowledge base first and then send those facts with the prompt. This makes answers more grounded and reliable.
